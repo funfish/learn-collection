@@ -69,7 +69,7 @@ function installModules(modules, store, path, rootState) {
       }, payload)
     })
   })
-  forEachValue(modules._raws.modules, (handlers, key) => {
+  forEachValue(modules._raws.getters, (handlers, key) => {
     if(store._wrapGatter[key]) {
       return console.log('Dont duplicate getter:', key)
     }
@@ -95,6 +95,7 @@ function resetStoreVM(state, store) {
     computed[key] = () => getter()
     Object.defineProperty(store.getters, key, {
       get: () => store._vm[key],
+      enumerable: true
     })
   })
   store._vm = new Vue({

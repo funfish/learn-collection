@@ -17,6 +17,7 @@ export default {
   },
   computed: {
     evenOrOdd() {
+      console.log(this.$store.getters)
       return this.$store.getters.evenOrOdd
     }
   },
