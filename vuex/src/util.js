@@ -1,5 +1,5 @@
 export function forEachValue (obj, fn) {
-  if(obj instanceof Object) {
+  if(obj) {
     Object.keys(obj).forEach(key => fn(obj[key], key))    
   }
 }

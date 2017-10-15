@@ -47,11 +47,16 @@ const actions = {
 const getters = {
   evenOrOdd: state => state.count % 2 === 0 ? 'even' : 'odd'
 }
-// A Vuex instance is created by combining the state, mutations, actions,
-// and getters.
-export default new Vuex.Store({
+const moduleaa = {
   state,
   getters,
   actions,
   mutations
+}
+// A Vuex instance is created by combining the state, mutations, actions,
+// and getters.
+export default new Vuex.Store({
+  modules: {
+    aa: moduleaa
+  }
 })

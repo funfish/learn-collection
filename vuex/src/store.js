@@ -16,6 +16,7 @@ export class Store {
 
     const store = this
     const { dispatch, commit } = this
+    let state = options.state || {}
     this.dispatch = function boundDispatch (type, payload) {
       return dispatch.call(store, type, payload)
     }
@@ -23,8 +24,8 @@ export class Store {
       return commit.call(store, type, payload, options)
     }
 
-    installModules(this._modules.root, this, [])
-    resetStoreVM(options.state, this)
+    installModules(this._modules.root, this, [], state)
+    resetStoreVM(state, this)
   }
   get state() {
     return this._vm._data.$$state
@@ -43,9 +44,9 @@ export class Store {
   }
 }
 
-function installModules(modules, store, path) {
+function installModules(modules, store, path, rootState) {
   if (path.length > 0) {
-    const parentState = getNestedState(store.state, path.slice(0, -1))
+    const parentState = getNestedState(rootState, path.slice(0, -1))
     const moduleName = path[path.length - 1]
     Vue.set(parentState, moduleName, modules.state)
   }
@@ -81,8 +82,8 @@ function installModules(modules, store, path) {
       )
     }
   })
-  forEachValue(modules._raws.modules, (module, key) => {
-    installModules(module, modules, path.cancat(key), store.state)
+  forEachValue(modules._child, (module, key) => {
+    installModules(module, store, path.concat(key), rootState)
   })
 }
 
@@ -122,4 +123,10 @@ export function install(_Vue) {
       }
     }
   })
+}
+
+function getNestedState (state, path) {
+  return path.length
+    ? path.reduce((state, key) => state[key], state)
+    : state
 }

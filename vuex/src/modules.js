@@ -8,8 +8,8 @@ export default class Modules {
   registerModules(path, rawModules) {
     if(rawModules._raws.modules) {
       forEachValue(rawModules._raws.modules, (rawModulesChild, key) => {
-        rawModules._child = new Module(rawModulesChild)
-        registerModules(path.cancat(key), rawModules._child)
+        rawModules._child[key] = new Module(rawModulesChild)
+        this.registerModules(path.concat(key), rawModules._child[key])
       })
     }
   }
