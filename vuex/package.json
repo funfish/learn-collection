@@ -9,7 +9,7 @@
 		"type": "git",
 		"url": "git+https://github.com/funfish/learn-collection.git"
 	},
-	"auto": "nichuangwei/funfish",
+	"author": "nichuangwei-funfish",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/funfish/learn-collection/issues"
